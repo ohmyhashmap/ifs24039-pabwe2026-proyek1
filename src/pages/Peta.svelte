@@ -109,6 +109,8 @@
 	};
 
 	const togglePlay = () => {
+		// Defensive guard: the play button is only rendered when there is more than one frame.
+		/* v8 ignore next -- @preserve */
 		if (timelineFrames.length <= 1) return;
 		isPlaying = !isPlaying;
 
@@ -124,6 +126,8 @@
 	};
 
 	const loadHotspots = async () => {
+		// Defensive guard: only called from the map `load` handler, after `map` is assigned.
+		/* v8 ignore next -- @preserve */
 		if (!map) return;
 		isLoading = true;
 
@@ -177,6 +181,8 @@
 	};
 
 	const fetchRecommendation = async () => {
+		// Defensive guard: the only caller (the $effect below) already checks `aqiData?.aqi`.
+		/* v8 ignore next -- @preserve */
 		if (!aqiData?.aqi) return;
 		isRecLoading = true;
 		try {

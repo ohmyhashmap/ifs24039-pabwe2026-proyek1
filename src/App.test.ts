@@ -163,6 +163,12 @@ describe('SPA navigation', () => {
 		expect(window.location.pathname).toBe('/');
 	});
 
+	it('ignores clicks that do not originate from an element', () => {
+		render(App);
+		document.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+		expect(window.location.pathname).toBe('/');
+	});
+
 	it('does not navigate for links to the current hash only', async () => {
 		const { container } = render(App);
 		const anchor = document.createElement('a');

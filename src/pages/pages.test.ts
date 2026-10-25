@@ -1,4 +1,5 @@
 import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/svelte';
+import { tick } from 'svelte';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import Berita from './Berita.svelte';
 import BeritaDetail from './BeritaDetail.svelte';
@@ -137,6 +138,15 @@ describe('Berita page', () => {
 		expect(screen.getByText('Gagal Memuat Berita Eksternal')).toBeInTheDocument();
 		expect(log).toHaveBeenCalledTimes(2);
 	});
+
+	it('shows a lone headline without any side stories', async () => {
+		vi.mocked(fetch).mockImplementation(async (input) =>
+			response(String(input).endsWith('/external') ? [] : [news(1)])
+		);
+		render(Berita);
+		expect(await screen.findByRole('heading', { name: 'Berita 1' })).toBeInTheDocument();
+		expect(screen.queryByRole('link', { name: /Berita 2/ })).not.toBeInTheDocument();
+	});
 });
 
 describe('Berita detail page', () => {
@@ -182,6 +192,26 @@ describe('Berita detail page', () => {
 		expect((await screen.findAllByRole('heading', { name: 'Berita 9' })).length).toBeGreaterThan(0);
 		expect(screen.queryByRole('img')).not.toBeInTheDocument();
 		expect(screen.queryByText('Berita Terkait')).not.toBeInTheDocument();
+	});
+
+	it('renders no article content when the API succeeds without an article', async () => {
+		window.history.replaceState({}, '', '/berita/missing');
+		vi.mocked(fetch).mockImplementation(async (input) =>
+			String(input).endsWith('/news') ? response([]) : response(null)
+		);
+		render(BeritaDetail);
+		await waitFor(() => expect(screen.queryByText('Memuat artikel...')).not.toBeInTheDocument());
+		expect(screen.queryByRole('heading')).not.toBeInTheDocument();
+	});
+
+	it('renders an untitled article together with its image caption', async () => {
+		window.history.replaceState({}, '', '/berita/news-9');
+		const article = news(9, { title: null });
+		vi.mocked(fetch).mockImplementation(async (input) =>
+			String(input).endsWith('/news') ? response([article]) : response(article)
+		);
+		render(BeritaDetail);
+		expect(await screen.findByText(/Ilustrasi:/)).toBeInTheDocument();
 	});
 });
 
@@ -287,6 +317,48 @@ describe('Lapor page', () => {
 		await fireEvent.click(screen.getByRole('button', { name: 'Kirim Laporan Warga' }));
 		await waitFor(() => expect(alert).toHaveBeenCalledWith('Gagal mengirim laporan'));
 	});
+
+	it('ignores an unsuccessful feed response and an empty submission', async () => {
+		setGeolocation('success');
+		vi.mocked(fetch).mockImplementation(async () => response([], false));
+		render(Lapor);
+		expect(await screen.findByText('Belum ada laporan masuk.')).toBeInTheDocument();
+
+		const submit = screen.getByRole('button', { name: 'Kirim Laporan Warga' });
+		expect(submit).toBeDisabled();
+		submit.removeAttribute('disabled');
+		await fireEvent.click(submit);
+		expect(fetch).not.toHaveBeenCalledWith(
+			'/api/v1/reports',
+			expect.objectContaining({ method: 'POST' })
+		);
+	});
+
+	it('adds a report that arrives after a submission to the feed', async () => {
+		setGeolocation('success');
+		let submitted = false;
+		vi.mocked(fetch).mockImplementation(async (_input, init) => {
+			if (init?.method === 'POST') {
+				submitted = true;
+				return response({});
+			}
+			const first = report(1, 'tinggi', new Date().toISOString());
+			return response(submitted ? [first, report(2, 'rendah', new Date().toISOString())] : [first]);
+		});
+		render(Lapor);
+		expect(await screen.findByText('Laporan 1')).toBeInTheDocument();
+		expect(screen.queryByText('Laporan 2')).not.toBeInTheDocument();
+
+		await fireEvent.input(screen.getByLabelText('Apa yang Anda lihat?'), {
+			target: { value: 'Asap baru' }
+		});
+		await fireEvent.click(screen.getByRole('button', { name: 'Kirim Laporan Warga' }));
+		expect(await screen.findByText('Laporan 2')).toBeInTheDocument();
+		expect(screen.getAllByRole('link', { name: /Cek Peta/ })[1]).toHaveAttribute(
+			'href',
+			'/peta?lat=3.5952&lon=98.6722'
+		);
+	});
 });
 
 describe('Statistik page', () => {
@@ -332,6 +404,28 @@ describe('Statistik page', () => {
 		vi.mocked(fetch).mockRejectedValue(new Error('offline'));
 		render(Statistik);
 		expect(await screen.findByText('Gagal terhubung ke server.')).toBeInTheDocument();
+	});
+
+	it('draws national chart titles when the statistics are not local', async () => {
+		setGeolocation('missing');
+		vi.mocked(fetch).mockResolvedValue(
+			response({
+				totalHotspots: 640,
+				isLocal: false,
+				topProvinces: [{ name: 'Riau', count: 7 }],
+				aqiDistribution: [4, 3, 2, 1]
+			}) as never
+		);
+		const chart = await import('chart.js/auto');
+		vi.mocked(chart.default).mockClear();
+		render(Statistik);
+		expect(await screen.findByText('640 Titik')).toBeInTheDocument();
+		await waitFor(() => expect(chart.default).toHaveBeenCalledTimes(2));
+		type ChartCall = [unknown, { options: { plugins: { title: { text: string } } } }];
+		const titles = (vi.mocked(chart.default).mock.calls as unknown as ChartCall[]).map(
+			([, config]) => config.options.plugins.title.text
+		);
+		expect(titles).toEqual(['Top 10 Provinsi Nasional', 'Distribusi Kualitas Udara Nasional']);
 	});
 });
 
@@ -493,7 +587,16 @@ describe('Peta page', () => {
 		await vi.advanceTimersByTimeAsync(50);
 		expect(map.getSource('hotspots-source').setData).toHaveBeenCalled();
 		await fireEvent.click(screen.getByRole('button', { name: 'Putar timelapse titik panas' }));
+		const slider = screen.getByRole('slider') as HTMLInputElement;
 		await vi.advanceTimersByTimeAsync(850);
+		await tick();
+		expect(slider.value).toBe('1');
+		await vi.advanceTimersByTimeAsync(800);
+		await tick();
+		expect(slider.value).toBe('2');
+		await vi.advanceTimersByTimeAsync(800);
+		await tick();
+		expect(slider.value).toBe('0');
 		await fireEvent.click(screen.getByRole('button', { name: 'Jeda timelapse titik panas' }));
 
 		await fireEvent.click(screen.getByRole('button', { name: 'Tampilkan peta nasional' }));
@@ -607,5 +710,186 @@ describe('Peta page', () => {
 		expect(healthLabel.parentElement).toHaveClass('ring-blue-500');
 		await new Promise((resolve) => setTimeout(resolve, 3100));
 		expect(healthLabel.parentElement).not.toHaveClass('ring-blue-500');
+	});
+
+	describe('edge cases', () => {
+		type MapInstance = {
+			addLayer(layer: { id: string }): void;
+			addSource(id: string, source: unknown): void;
+			removeLayer(id: string): void;
+			removeSource(id: string): void;
+			setLayoutProperty: ReturnType<typeof vi.fn>;
+		};
+		type MapLibreMock = typeof import('maplibre-gl') & {
+			__mapState: { instances: MapInstance[]; failInitialization: boolean };
+			setWorkerUrl: ReturnType<typeof vi.fn>;
+		};
+		const loadMapLibre = async () => (await import('maplibre-gl')) as MapLibreMock;
+		const at = (hour: number) => new Date(Date.UTC(2025, 0, 1, hour)).toISOString();
+		const waitForEnvironment = () =>
+			waitFor(() =>
+				expect(fetch).toHaveBeenCalledWith(expect.stringContaining('/api/v1/environment'))
+			);
+
+		it('keeps the map controls inert while the map is unavailable', async () => {
+			const maplibre = await loadMapLibre();
+			const attempts = maplibre.setWorkerUrl.mock.calls.length;
+			maplibre.__mapState.failInitialization = true;
+			try {
+				render(Peta);
+				await waitFor(() =>
+					expect(maplibre.setWorkerUrl.mock.calls.length).toBeGreaterThan(attempts)
+				);
+
+				await fireEvent.click(screen.getByRole('button', { name: 'Tampilkan lokasi saya' }));
+				expect(screen.getByRole('button', { name: 'Tampilkan lokasi saya' })).toBeInTheDocument();
+
+				await fireEvent.click(screen.getByRole('button', { name: 'Tampilkan kontrol peta' }));
+				await fireEvent.click(screen.getByRole('button', { name: /Sembunyikan Titik/ }));
+				expect(screen.getByRole('button', { name: /Sembunyikan Titik/ })).toBeInTheDocument();
+				await fireEvent.click(screen.getByRole('button', { name: /Lintasan Asap/ }));
+				expect(screen.getByRole('button', { name: /Lintasan Asap/ })).toBeInTheDocument();
+				expect(fetch).not.toHaveBeenCalled();
+			} finally {
+				maplibre.__mapState.failInitialization = false;
+			}
+		});
+
+		it('toggles hotspot visibility safely when no hotspot layer exists', async () => {
+			vi.mocked(fetch).mockImplementation(async () => response(null, false));
+			render(Peta);
+			const maplibre = await loadMapLibre();
+			await waitForEnvironment();
+			const map = maplibre.__mapState.instances.at(-1)!;
+
+			await fireEvent.click(screen.getByRole('button', { name: 'Tampilkan kontrol peta' }));
+			await fireEvent.click(screen.getByRole('button', { name: /Sembunyikan Titik/ }));
+			expect(await screen.findByRole('button', { name: /Tampilkan Titik/ })).toBeInTheDocument();
+			expect(map.setLayoutProperty).not.toHaveBeenCalled();
+		});
+
+		it('places unsorted hotspots into frames and drops out-of-range ones', async () => {
+			const hotspots = [
+				{ lat: 3.1, lon: 98.1, confidence: 55, detected_at: at(6) },
+				{ lat: 3.2, lon: 98.2, confidence: 90, detected_at: at(0) },
+				{ lat: 3.3, lon: 98.3, confidence: 40, detected_at: at(18) },
+				{ lat: 3.4, lon: 98.4, confidence: 'abc', detected_at: at(12) },
+				{ lat: 3.5, lon: 98.5, confidence: 65, detected_at: at(7) }
+			];
+			vi.mocked(fetch).mockImplementation(async (input) =>
+				String(input).includes('/hotspots') ? response(hotspots) : response(null, false)
+			);
+			render(Peta);
+			await waitForEnvironment();
+			await fireEvent.click(screen.getByRole('button', { name: 'Buka Info' }));
+
+			const timeSlider = screen.getByRole('slider');
+			expect(timeSlider).toHaveAttribute('max', '1');
+			const total = () => screen.getByText('Titik Api').nextElementSibling;
+			await waitFor(() => expect(total()).toHaveTextContent('1'));
+			await fireEvent.input(timeSlider, { target: { value: '0' } });
+			await waitFor(() => expect(total()).toHaveTextContent('2'));
+		});
+
+		it('creates no timeline when hotspot timestamps run backwards', async () => {
+			const hotspots = [
+				{ lat: 3.1, lon: 98.1, confidence: 80, detected_at: at(12) },
+				{ lat: 3.2, lon: 98.2, confidence: 80, detected_at: at(0) }
+			];
+			vi.mocked(fetch).mockImplementation(async (input) =>
+				String(input).includes('/hotspots') ? response(hotspots) : response(null, false)
+			);
+			render(Peta);
+			await waitForEnvironment();
+			await fireEvent.click(screen.getByRole('button', { name: 'Buka Info' }));
+			expect(screen.queryByRole('slider')).not.toBeInTheDocument();
+		});
+
+		it('shows the waiting message when recommendations are unsuccessful', async () => {
+			vi.mocked(fetch).mockImplementation(async (input) => {
+				const url = String(input);
+				if (url.includes('/environment')) return response({ aqi: { aqi: 30 }, weather: {} });
+				if (url.includes('/safe-window')) return response({});
+				return response(null, false);
+			});
+			render(Peta);
+			await waitFor(() =>
+				expect(fetch).toHaveBeenCalledWith(expect.stringContaining('/api/v1/recommendations'))
+			);
+			await fireEvent.click(screen.getByRole('button', { name: 'Buka Info' }));
+
+			expect(await screen.findByText('Baik')).toBeInTheDocument();
+			expect(screen.getByText('Lokasi Anda')).toBeInTheDocument();
+			expect(screen.getByText('Waktu Aman')).toBeInTheDocument();
+			expect(screen.getByText('km/j')).toBeInTheDocument();
+			expect(await screen.findByText('Menunggu data...')).toBeInTheDocument();
+		});
+
+		it('replaces stale trajectory layers and targets the strongest hotspot', async () => {
+			const stamp = '2025-03-01T00:00:00.000Z';
+			const hotspots = [
+				{ lat: 1.5, lon: 101.5, confidence: 40, detected_at: stamp },
+				{ lat: 1.6, lon: 101.6, confidence: 95, detected_at: stamp },
+				{ lat: 1.7, lon: 101.7, confidence: 70, detected_at: stamp }
+			];
+			vi.mocked(fetch).mockImplementation(async (input) => {
+				const url = String(input);
+				if (url.includes('/hotspots')) return response(hotspots);
+				if (url.includes('/trajectory'))
+					return response({ geojson: { type: 'FeatureCollection', features: [] } });
+				return response(null, false);
+			});
+			render(Peta);
+			const maplibre = await loadMapLibre();
+			await waitForEnvironment();
+			const map = maplibre.__mapState.instances.at(-1)!;
+			map.addSource('trajectory-source', { type: 'geojson', data: {} });
+			map.addLayer({ id: 'trajectory-line' });
+
+			await fireEvent.click(screen.getByRole('button', { name: 'Tampilkan kontrol peta' }));
+			await fireEvent.click(screen.getByRole('button', { name: /Lintasan Asap/ }));
+			expect(await screen.findByRole('button', { name: /Matikan Lintasan/ })).toBeInTheDocument();
+			expect(fetch).toHaveBeenCalledWith('/api/v1/trajectory?lat=1.6&lon=101.6');
+
+			map.removeLayer('trajectory-line');
+			map.removeSource('trajectory-source');
+			await fireEvent.click(screen.getByRole('button', { name: /Matikan Lintasan/ }));
+			expect(await screen.findByRole('button', { name: /Lintasan Asap/ })).toBeInTheDocument();
+		});
+
+		it('leaves the trajectory off when the prediction is unsuccessful', async () => {
+			let release!: (value: Response) => void;
+			vi.mocked(fetch).mockImplementation((input) =>
+				String(input).includes('/trajectory')
+					? new Promise<Response>((resolve) => (release = resolve))
+					: Promise.resolve(response(null, false))
+			);
+			render(Peta);
+			await waitForEnvironment();
+			await fireEvent.click(screen.getByRole('button', { name: 'Tampilkan kontrol peta' }));
+			await fireEvent.click(screen.getByRole('button', { name: /Lintasan Asap/ }));
+			await waitFor(() =>
+				expect(screen.getByRole('button', { name: /Lintasan Asap/ })).toBeDisabled()
+			);
+
+			release(response(null, false));
+			await waitFor(() =>
+				expect(screen.getByRole('button', { name: /Lintasan Asap/ })).toBeEnabled()
+			);
+			expect(alert).not.toHaveBeenCalled();
+		});
+
+		it('opens the smoke trajectory automatically from the trajectory action', async () => {
+			window.history.replaceState({}, '', '/?action=trajectory');
+			vi.mocked(fetch).mockImplementation(async (input) =>
+				String(input).includes('/trajectory')
+					? response({ geojson: { type: 'FeatureCollection', features: [] } })
+					: response([])
+			);
+			render(Peta);
+			await waitFor(() => expect(fetch).toHaveBeenCalledWith('/api/v1/trajectory'), {
+				timeout: 4000
+			});
+		});
 	});
 });

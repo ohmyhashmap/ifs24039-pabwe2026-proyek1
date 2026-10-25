@@ -179,7 +179,7 @@
 				<div class="inline-flex flex-col rounded-xl border border-slate-700 bg-slate-900 px-4 py-2">
 					<span class="mb-1 text-xs text-slate-400">Total Titik Api (7 Hari)</span>
 					<span class="text-sm font-bold text-orange-400">
-						{totalHotspots.toLocaleString('id-ID')} Titik
+						{`${totalHotspots.toLocaleString('id-ID')} Titik`}
 					</span>
 				</div>
 			</div>

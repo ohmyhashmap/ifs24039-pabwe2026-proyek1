@@ -283,7 +283,7 @@
 								{report.lat.toFixed(5)}, {report.lon.toFixed(5)}
 							</div>
 							<a
-								href="/peta?lat={report.lat}&lon={report.lon}"
+								href={`/peta?lat=${report.lat}&lon=${report.lon}`}
 								class="flex items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-xs font-bold text-slate-300 transition-colors hover:bg-slate-700 hover:text-white"
 							>
 								🗺️ Cek Peta

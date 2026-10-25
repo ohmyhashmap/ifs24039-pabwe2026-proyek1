@@ -163,12 +163,12 @@
 		<div
 			class="grid grid-cols-1 gap-8 divide-y divide-slate-800/50 text-center md:grid-cols-3 md:divide-x md:divide-y-0"
 		>
-			{#each stats as stat, i}
-				<div class="group py-4" in:fly={{ y: 30, duration: 600, delay: 800 + i * 200 }}>
+			{#each stats as stat}
+				<div class="group py-4">
 					<div
 						class="mb-2 font-mono text-4xl font-extrabold text-emerald-400 transition-transform duration-300 group-hover:scale-110 md:text-5xl"
 					>
-						{stat.value.toLocaleString('id-ID')}{stat.suffix}
+						{`${stat.value.toLocaleString('id-ID')}${stat.suffix}`}
 					</div>
 					<div class="text-sm font-medium tracking-widest text-slate-400 uppercase">
 						{stat.label}
@@ -294,11 +294,10 @@
 			</div>
 		{:else}
 			<div class="grid gap-6 md:grid-cols-3">
-				{#each beritaTerbaru as berita, i}
+				{#each beritaTerbaru as berita}
 					<a
 						href={`/berita/${berita.slug}`}
 						class="group block cursor-pointer overflow-hidden rounded-2xl border border-slate-800 bg-slate-950 shadow-xl transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(0,0,0,0.5)]"
-						in:fly={{ y: 30, duration: 500, delay: i * 100 }}
 					>
 						<div class="relative h-48 overflow-hidden bg-slate-800">
 							<img

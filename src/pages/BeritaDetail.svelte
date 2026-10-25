@@ -49,7 +49,7 @@
 		<div class="mx-auto max-w-4xl px-4 py-32 text-center">
 			<div class="rounded-3xl border border-red-700/50 bg-red-900/30 p-8 text-red-200">
 				<span class="mb-4 block text-5xl">🔍</span>
-				<h1 class="mb-2 text-2xl font-bold">Ups, {errorMessage}</h1>
+				<h1 class="mb-2 text-2xl font-bold">{`Ups, ${errorMessage}`}</h1>
 				<p class="mb-6 text-slate-400">
 					Artikel yang Anda cari mungkin sudah dihapus atau tautannya salah.
 				</p>
@@ -123,10 +123,7 @@
 
 			<!-- Gambar Utama -->
 			{#if article.image}
-				<figure
-					class="mb-10 overflow-hidden rounded-2xl border border-slate-800 shadow-2xl"
-					in:fly={{ y: 20, duration: 400, delay: 100 }}
-				>
+				<figure class="mb-10 overflow-hidden rounded-2xl border border-slate-800 shadow-2xl">
 					<img
 						src={article.image}
 						alt={article.title}
