@@ -4,11 +4,31 @@ import { svelteTesting } from '@testing-library/svelte/vite';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitest/config';
+import type { Plugin } from 'vite';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
 
+/**
+ * Converts render-blocking `<link rel="stylesheet">` tags injected by Vite
+ * into non-render-blocking `<link rel="preload" as="style" onload="…">` with
+ * a `<noscript>` fallback so the CSS is loaded asynchronously.
+ */
+function asyncCssPlugin(): Plugin {
+	return {
+		name: 'async-css',
+		enforce: 'post',
+		transformIndexHtml(html) {
+			return html.replace(
+				/<link rel="stylesheet" crossorigin href="(\/assets\/[^"]+\.css)">/g,
+				(_match, href) =>
+					`<link rel="preload" as="style" crossorigin href="${href}" onload="this.onload=null;this.rel='stylesheet'">\n\t\t<noscript><link rel="stylesheet" crossorigin href="${href}"></noscript>`
+			);
+		}
+	};
+}
+
 export default defineConfig({
-	plugins: [svelte(), svelteTesting(), tailwindcss()],
+	plugins: [svelte(), svelteTesting(), tailwindcss(), asyncCssPlugin()],
 	resolve: {
 		alias: {
 			'#lib': path.resolve(root, 'src/lib')
