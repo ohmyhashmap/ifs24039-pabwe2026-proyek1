@@ -1,0 +1,22 @@
+{
+	"$schema": "https://agenticresourcediscovery.org/schemas/v1.0/ai-catalog.json",
+	"specVersion": "1.0",
+	"host": {
+		"displayName": "SigapAsap",
+		"identifier": "ifs24039-pabwe2026-proyek1.s1if.cloud"
+	},
+	"entries": [
+		{
+			"identifier": "urn:ai:ifs24039-pabwe2026-proyek1.s1if.cloud:api:v1",
+			"displayName": "SigapAsap Air Quality & Hotspots API",
+			"type": "application/json",
+			"url": "https://ifs24039-pabwe2026-proyek1-be.s1if.cloud/api/v1",
+			"description": "Layanan pemantauan titik panas (hotspots) kebakaran hutan dan lahan serta indeks standar pencemar udara (ISPU/AQI) di Indonesia secara real-time.",
+			"representativeQueries": [
+				"Bagaimana kondisi kualitas udara dan indeks ISPU hari ini?",
+				"Tampilkan titik panas kebakaran hutan terkini di Indonesia",
+				"Apa rekomendasi kesehatan saat terpapar kabut asap?"
+			]
+		}
+	]
+}

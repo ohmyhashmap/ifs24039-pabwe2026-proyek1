@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
-	import Chart from 'chart.js/auto';
 
 	const API_BASE = import.meta.env.VITE_API_URL || '';
 
@@ -51,6 +50,7 @@
 				await new Promise((r) => setTimeout(r, 50));
 
 				if (barCanvas && doughnutCanvas) {
+					const { default: Chart } = await import('chart.js/auto');
 					// 3. Inisialisasi Chart Batang
 					new Chart(barCanvas, {
 						type: 'bar',

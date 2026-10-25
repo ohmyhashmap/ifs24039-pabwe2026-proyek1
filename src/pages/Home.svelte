@@ -29,7 +29,7 @@
 				const variant = new URL(source);
 				variant.searchParams.set('auto', 'format');
 				variant.searchParams.set('fit', 'crop');
-				variant.searchParams.set('q', '75');
+				variant.searchParams.set('q', '60');
 				variant.searchParams.set('w', String(width));
 				return `${variant.toString()} ${width}w`;
 			})

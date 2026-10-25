@@ -1,0 +1,19 @@
+# SigapAsap
+
+> Platform pemantauan kualitas udara, deteksi dini titik panas (hotspot) kebakaran hutan dan lahan (karhutla), serta sistem rekomendasi kesehatan berbasis kecerdasan buatan dan data satelit untuk perlindungan masyarakat Indonesia.
+
+SigapAsap mengintegrasikan data satelit cuaca, sensor kualitas udara, dan prediksi arah lintasan kabut asap untuk memberikan panduan mitigasi bencana yang presisi dan tepat sasaran.
+
+## Fitur Utama
+
+- [Beranda](https://ifs24039-pabwe2026-proyek1.s1if.cloud/): Ringkasan status kualitas udara nasional dan informasi deteksi dini titik panas karhutla.
+- [Peta Sebaran Titik Panas](https://ifs24039-pabwe2026-proyek1.s1if.cloud/peta): Peta interaktif titik panas dengan simulasi trajektori asap dan data stasiun pemantau AQI.
+- [Statistik Kualitas Udara](https://ifs24039-pabwe2026-proyek1.s1if.cloud/statistik): Analisis visual data polutan ISPU/AQI dan riwayat tren kualitas udara daerah.
+- [Berita & Edukasi](https://ifs24039-pabwe2026-proyek1.s1if.cloud/berita): Artikel edukatif tentang pencegahan karhutla dan protokol perlindungan kesehatan.
+- [Lapor Titik Panas](https://ifs24039-pabwe2026-proyek1.s1if.cloud/lapor): Pelaporan masyarakat untuk memverifikasi kejadian karhutla di lapangan.
+- [Tentang Platform](https://ifs24039-pabwe2026-proyek1.s1if.cloud/tentang): Metodologi pengolahan data, integrasi sensor, dan inovasi platform SigapAsap.
+
+## Dokumentasi API & Backend
+
+- [SigapAsap API](https://ifs24039-pabwe2026-proyek1-be.s1if.cloud/api/v1): Dokumentasi REST API untuk integrasi data titik panas, kualitas udara, berita, dan autentikasi pengguna.
+- [AI Catalog Manifest](https://ifs24039-pabwe2026-proyek1.s1if.cloud/.well-known/ai-catalog.json): Manifest kemampuan agen cerdas sesuai standar Agentic Resource Discovery (ARD).

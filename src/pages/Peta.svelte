@@ -2,7 +2,6 @@
 	import { jsonHeaders } from '#lib/auth.svelte';
 	import { onMount } from 'svelte';
 	import { fly, fade } from 'svelte/transition';
-	import 'maplibre-gl/dist/maplibre-gl.css';
 	import maplibreglWorker from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
 
 	const API_BASE = import.meta.env.VITE_API_URL || '';
@@ -326,7 +325,10 @@
 
 		const initializeMap = async () => {
 			try {
-				const maplibregl = await import('maplibre-gl');
+				const [maplibregl] = await Promise.all([
+					import('maplibre-gl'),
+					import('maplibre-gl/dist/maplibre-gl.css')
+				]);
 				const { setWorkerUrl, Map } = maplibregl;
 				setWorkerUrl(maplibreglWorker);
 				(window as any).maplibregl = maplibregl;

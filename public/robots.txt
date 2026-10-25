@@ -1,3 +1,5 @@
 # allow crawling everything by default
 User-agent: *
 Disallow:
+
+Agentmap: https://ifs24039-pabwe2026-proyek1.s1if.cloud/.well-known/ai-catalog.json
