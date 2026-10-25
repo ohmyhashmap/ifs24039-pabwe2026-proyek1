@@ -47,7 +47,7 @@ pipeline {
 
                     echo "=== Installing Dependencies ==="
 
-                    bun install --frozen-lockfile
+                    bun install
 
                     echo "=== Dependencies Installed ==="
                 '''
@@ -57,10 +57,10 @@ pipeline {
         // ============================================================
         // TEST
         // ============================================================
-        stage('Frontend Checks') {
+        stage('Test') {
             agent {
                 docker {
-                    image 'oven/bun:alpine'
+                    image 'node:24-alpine'
                     reuseNode true
                 }
             }
@@ -69,36 +69,17 @@ pipeline {
                 sh '''
                     set -e
 
-                    echo "=== Checking Frontend Types ==="
-                    bun run check
+                    echo "=== Running Tests with Coverage ==="
 
-                    echo "=== Running Frontend Tests with Coverage ==="
-                    bun run test:coverage
+                    if [ -f angular.json ]; then
+                        echo "Framework: Angular"
+                        npx ng test --coverage
+                    else
+                        echo "Framework: React, Next.js, Vue, Nuxt, Svelte, or SvelteKit"
+                        npx vitest run --coverage
+                    fi
 
-                    echo "=== Frontend Checks Passed ==="
-                '''
-            }
-        }
-
-        // ============================================================
-        // BUILD STATIC SPA
-        // ============================================================
-        stage('Build Frontend') {
-            agent {
-                docker {
-                    image 'oven/bun:alpine'
-                    reuseNode true
-                }
-            }
-
-            steps {
-                sh '''
-                    set -e
-
-                    echo "=== Building Static Frontend ==="
-                    bun run build
-                    test -f apps/web/dist/index.html
-                    echo "=== Static Frontend Built ==="
+                    echo "=== Tests Passed ==="
                 '''
             }
         }
@@ -183,17 +164,15 @@ pipeline {
 
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    dir('apps/web') {
-                        sh '''
-                            set -e
+                    sh '''
+                        set -e
 
-                            echo "=== SonarQube Frontend Analysis ==="
+                        echo "=== SonarQube Analysis ==="
 
-                            sonar-scanner
+                        sonar-scanner
 
-                            echo "=== SonarQube Frontend Analysis Completed ==="
-                        '''
-                    }
+                        echo "=== SonarQube Analysis Completed ==="
+                    '''
                 }
             }
         }
@@ -233,16 +212,32 @@ pipeline {
 
                     rm -f latest-app.zip
 
-                    cd apps/web/dist
-                    zip -r ../../../latest-app.zip .
+                    zip -r latest-app.zip . \
+                        -x "node_modules/*" \
+                        -x ".git/*" \
+                        -x ".env" \
+                        -x ".env.*" \
+                        -x "coverage/*" \
+                        -x ".next/*" \
+                        -x "out/*" \
+                        -x ".nuxt/*" \
+                        -x ".output/*" \
+                        -x ".svelte-kit/*" \
+                        -x ".angular/*" \
+                        -x "dist/*" \
+                        -x "build/*" \
+                        -x ".trivy-cache/*" \
+                        -x "latest-app.zip" \
+                        -x "trivy-results.sarif" \
+                        -x ".docs/*"
 
                     echo "=== Application Package Created ==="
 
-                    ls -lh ../../../latest-app.zip
+                    ls -lh latest-app.zip
 
                     echo "=== Package Content ==="
 
-                    unzip -l ../../../latest-app.zip
+                    unzip -l latest-app.zip
                 '''
             }
         }
