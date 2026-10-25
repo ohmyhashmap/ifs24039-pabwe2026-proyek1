@@ -1,9 +1,16 @@
 <script lang="ts">
 	import { onMount, type Component } from 'svelte';
 	import './app.css';
+	import { auth, GUEST_ONLY_PATHS, logout, normalizePath, PROTECTED_PATHS } from '#lib/auth.svelte';
 	import Berita from './pages/Berita.svelte';
 	import BeritaDetail from './pages/BeritaDetail.svelte';
+	import Dashboard from './pages/Dashboard.svelte';
 	import Home from './pages/Home.svelte';
+	import LaporanSaya from './pages/LaporanSaya.svelte';
+	import Login from './pages/auth/Login.svelte';
+	import Pengaturan from './pages/Pengaturan.svelte';
+	import Profil from './pages/Profil.svelte';
+	import Register from './pages/auth/Register.svelte';
 	import Lapor from './pages/Lapor.svelte';
 	import NotFound from './pages/NotFound.svelte';
 	import Peta from './pages/Peta.svelte';
@@ -16,9 +23,23 @@
 	);
 	let isMobileMenuOpen = $state(false);
 
+	// Halaman terproteksi butuh login; halaman login/daftar tidak untuk yang sudah login.
+	const guardRedirect = (pathname: string): string | null => {
+		const path = normalizePath(pathname);
+		if (PROTECTED_PATHS.includes(path) && !auth.token) return '/auth/login';
+		if (GUEST_ONLY_PATHS.includes(path) && auth.token) return '/dashboard';
+		return null;
+	};
+
 	const resolvePage = (pathname: string): Component => {
-		const normalizedPath = pathname.replace(/\/+$/, '') || '/';
+		const normalizedPath = normalizePath(pathname);
 		if (normalizedPath === '/') return Home;
+		if (normalizedPath === '/auth/login') return Login;
+		if (normalizedPath === '/auth/register') return Register;
+		if (normalizedPath === '/dashboard') return Dashboard;
+		if (normalizedPath === '/laporan-saya') return LaporanSaya;
+		if (normalizedPath === '/profil') return Profil;
+		if (normalizedPath === '/pengaturan') return Pengaturan;
 		if (normalizedPath === '/berita') return Berita;
 		if (/^\/berita\/[^/]+$/.test(normalizedPath)) return BeritaDetail;
 		if (normalizedPath === '/lapor') return Lapor;
@@ -28,12 +49,22 @@
 		return NotFound;
 	};
 
-	let currentPage: Component = $derived(resolvePage(currentPath));
+	let currentPage: Component = $derived(resolvePage(guardRedirect(currentPath) ?? currentPath));
 
 	const updateLocation = () => {
+		const redirect = guardRedirect(window.location.pathname);
+		if (redirect) {
+			window.history.replaceState({}, '', redirect);
+		}
 		currentPath = window.location.pathname;
 		currentUrl = `${window.location.pathname}${window.location.search}${window.location.hash}`;
 	};
+
+	// Sesi berubah (login/logout/401) -> sinkronkan URL dengan aturan guard.
+	$effect(() => {
+		void auth.token;
+		updateLocation();
+	});
 
 	const handleLinkClick = (event: MouseEvent) => {
 		if (
@@ -136,6 +167,23 @@
 					<a href="/tentang" class="text-slate-300 transition-colors duration-300 hover:text-white"
 						>Tentang Kami</a
 					>
+
+					{#if auth.token}
+						<a
+							href="/dashboard"
+							class="text-slate-300 transition-colors duration-300 hover:text-white">Dashboard</a
+						>
+						<button
+							type="button"
+							onclick={logout}
+							class="text-slate-300 transition-colors duration-300 hover:text-white">Keluar</button
+						>
+					{:else}
+						<a
+							href="/auth/login"
+							class="text-slate-300 transition-colors duration-300 hover:text-white">Masuk</a
+						>
+					{/if}
 
 					<a
 						href="/peta"
@@ -270,6 +318,25 @@
 						class="rounded-xl px-4 py-3 text-slate-300 transition-colors hover:bg-slate-800 hover:text-white"
 						>Tentang Kami</a
 					>
+					{#if auth.token}
+						<a
+							href="/dashboard"
+							class="rounded-xl px-4 py-3 text-slate-300 transition-colors hover:bg-slate-800 hover:text-white"
+							>Dashboard</a
+						>
+						<button
+							type="button"
+							onclick={logout}
+							class="rounded-xl px-4 py-3 text-left text-slate-300 transition-colors hover:bg-slate-800 hover:text-white"
+							>Keluar</button
+						>
+					{:else}
+						<a
+							href="/auth/login"
+							class="rounded-xl px-4 py-3 text-slate-300 transition-colors hover:bg-slate-800 hover:text-white"
+							>Masuk</a
+						>
+					{/if}
 					<div class="pt-2">
 						<a
 							href="/peta"

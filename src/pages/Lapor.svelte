@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { jsonHeaders } from '#lib/auth.svelte';
 	import { onMount } from 'svelte';
 	import { fade, fly } from 'svelte/transition';
 
@@ -32,7 +33,7 @@
 		try {
 			await fetch(`${API_BASE}/api/v1/reports`, {
 				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
+				headers: jsonHeaders(),
 				body: JSON.stringify({
 					lat: location.lat,
 					lon: location.lon,

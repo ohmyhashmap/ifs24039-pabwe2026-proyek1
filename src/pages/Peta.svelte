@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { jsonHeaders } from '#lib/auth.svelte';
 	import { onMount } from 'svelte';
 	import { fly, fade } from 'svelte/transition';
 	import 'maplibre-gl/dist/maplibre-gl.css';
@@ -226,7 +227,7 @@
 		try {
 			await fetch(`${API_BASE}/api/v1/reports`, {
 				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
+				headers: jsonHeaders(),
 				body: JSON.stringify({ lat, lon, description: reportDesc })
 			});
 			showReportModal = false;

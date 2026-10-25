@@ -1,6 +1,8 @@
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/svelte';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import App from './App.svelte';
+import { auth, clearSession } from '#lib/auth.svelte';
+import { apiResponse, loginAs, stubFetch } from './test/helpers';
 
 afterEach(() => {
 	cleanup();
@@ -8,6 +10,7 @@ afterEach(() => {
 	window.history.replaceState({}, '', '/');
 	document.documentElement.classList.remove('light');
 	localStorage.clear();
+	clearSession();
 });
 
 describe('SPA navigation', () => {
@@ -176,5 +179,78 @@ describe('SPA navigation', () => {
 		container.append(anchor);
 		await fireEvent.click(anchor);
 		expect(window.location.pathname).toBe('/');
+	});
+});
+
+describe('authentication guard and navbar', () => {
+	it('redirects guests away from protected pages', async () => {
+		stubFetch(() => apiResponse([]));
+		window.history.replaceState({}, '', '/dashboard');
+		render(App);
+		expect(await screen.findByRole('heading', { name: 'Masuk' })).toBeInTheDocument();
+		expect(window.location.pathname).toBe('/auth/login');
+		expect(screen.getByRole('link', { name: 'Masuk' })).toBeInTheDocument();
+	});
+
+	it.each([
+		['/dashboard', /Halo,/],
+		['/laporan-saya', 'Laporan Saya'],
+		['/profil', 'Profil'],
+		['/pengaturan', 'Pengaturan']
+	])('opens %s for signed-in users', async (path, heading) => {
+		loginAs();
+		stubFetch(() => apiResponse([]));
+		window.history.replaceState({}, '', path);
+		render(App);
+		expect(await screen.findByRole('heading', { level: 1, name: heading })).toBeInTheDocument();
+		expect(window.location.pathname).toBe(path);
+	});
+
+	it('shows register for guests and sends signed-in users to the dashboard', async () => {
+		stubFetch(() => apiResponse([]));
+		window.history.replaceState({}, '', '/auth/register');
+		const { unmount } = render(App);
+		expect(await screen.findByRole('heading', { name: 'Daftar' })).toBeInTheDocument();
+		unmount();
+
+		loginAs();
+		window.history.replaceState({}, '', '/auth/login');
+		render(App);
+		expect(await screen.findByRole('heading', { name: /Halo,/ })).toBeInTheDocument();
+		expect(window.location.pathname).toBe('/dashboard');
+	});
+
+	it('shows account links and signs out from the desktop and mobile menus', async () => {
+		loginAs();
+		stubFetch(() => apiResponse([]));
+		window.history.replaceState({}, '', '/tentang');
+		render(App);
+		expect(screen.getByRole('link', { name: 'Dashboard' })).toBeInTheDocument();
+
+		await fireEvent.click(screen.getByRole('button', { name: 'Buka menu navigasi' }));
+		expect(screen.getAllByRole('link', { name: 'Dashboard' })).toHaveLength(2);
+		await fireEvent.click(screen.getAllByRole('button', { name: 'Keluar' })[1]);
+		await waitFor(() => expect(window.location.pathname).toBe('/auth/login'));
+		expect(auth.token).toBeNull();
+
+		loginAs();
+		await fireEvent.click(screen.getAllByRole('link', { name: 'Tentang Kami' })[0]);
+		await fireEvent.click(screen.getAllByRole('button', { name: 'Keluar' })[0]);
+		await waitFor(() => expect(auth.token).toBeNull());
+	});
+
+	it('shows login links in the mobile menu for guests', async () => {
+		stubFetch(() => apiResponse([]));
+		render(App);
+		await fireEvent.click(screen.getByRole('button', { name: 'Buka menu navigasi' }));
+		expect(screen.getAllByRole('link', { name: 'Masuk' })).toHaveLength(2);
+	});
+
+	it('sends users back to login when the session expires on a protected page', async () => {
+		loginAs();
+		stubFetch(() => apiResponse(null, 401, 'Sesi berakhir'));
+		window.history.replaceState({}, '', '/laporan-saya');
+		render(App);
+		await waitFor(() => expect(window.location.pathname).toBe('/auth/login'));
 	});
 });
