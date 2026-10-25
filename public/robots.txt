@@ -1,3 +1,9 @@
-# allow crawling everything by default
+# Allow crawling everything by default
 User-agent: *
 Allow: /
+
+# Agentic Resource Discovery (Wajib untuk audit AI)
+Agentmap: /.well-known/ai-catalog.json
+
+# Sitemap (Sangat disarankan untuk SEO)
+Sitemap: https://ifs24039-pabwe2026-proyek1.s1if.cloud/sitemap.xml
