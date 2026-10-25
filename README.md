@@ -26,3 +26,8 @@ bun run preview
 ```
 
 Build static SPA dibuat ke `dist`.
+
+## Backend
+
+API Express.js + SQLite ada di folder `backend/` (lihat `backend/README.md`).
+Panduan form audit Lighthouse & Axe Core: `docs/AUDIT.md`.
