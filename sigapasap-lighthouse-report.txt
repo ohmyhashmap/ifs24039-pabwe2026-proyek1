@@ -1,0 +1,48 @@
+════════════════════════════════════════════════════════════════════
+        LAPORAN LIGHTHOUSE — TEKS
+════════════════════════════════════════════════════════════════════
+URL      : https://sigapasap.vercel.app/
+Waktu    : 25/10/2026, 06.28.29
+Versi LH : 13.5.0
+Device   : desktop/mobile (sesuai preset)
+
+────────────────────────────────────────────────────────────────────
+  1. SKOR KATEGORI
+────────────────────────────────────────────────────────────────────
+  ✅ Performance           : 100/100
+  ✅ Accessibility         : 100/100
+  ✅ Best Practices        : 100/100
+  ✅ SEO                   : 100/100
+  ✅ Agentic Browsing      : 100/100
+
+────────────────────────────────────────────────────────────────────
+  2. METRIK PERFORMANCE UTAMA
+────────────────────────────────────────────────────────────────────
+  ✅ First Contentful Paint          : 0.4 s        (skor: 100)
+  ✅ Largest Contentful Paint        : 0.5 s        (skor: 100)
+  ✅ Total Blocking Time             : 0 ms         (skor: 100)
+  ✅ Cumulative Layout Shift         : 0            (skor: 100)
+  ⚠️ Speed Index                     : 0.9 s        (skor: 99)
+  ✅ Time to Interactive             : 0.5 s        (skor: 100)
+
+────────────────────────────────────────────────────────────────────
+  3. AUDIT YANG PERLU PERHATIAN (skor < 100)
+────────────────────────────────────────────────────────────────────
+  ⚠️ Speed Index
+     Nilai  : 0.9 s
+     Saran  : Speed Index shows how quickly the contents of a page are visibly populated. .
+
+  ⚠️ Improve image delivery
+     Nilai  : Est savings of 13 KiB
+     Saran  : Reducing the download time of images can improve the perceived load time of the page and LCP.
+
+
+════════════════════════════════════════════════════════════════════
+  RINGKASAN
+════════════════════════════════════════════════════════════════════
+Audit perlu perhatian : 2
+Performance           : 100/100
+Accessibility         : 100/100
+Best Practices        : 100/100
+SEO                   : 100/100
+════════════════════════════════════════════════════════════════════

@@ -1,0 +1,55 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+
+/* ... (kode CSS Anda sebelumnya) ... */
+
+/* =========================================
+   GLOBAL LIGHT MODE OVERRIDE
+   ========================================= */
+
+html.light .bg-slate-950 {
+	background-color: #f8fafc;
+} /* Slate-50 */
+html.light .bg-slate-900 {
+	background-color: #ffffff;
+} /* White */
+html.light .bg-slate-800 {
+	background-color: #f1f5f9;
+} /* Slate-100 */
+html.light .bg-slate-900\/80 {
+	background-color: rgba(255, 255, 255, 0.8);
+}
+html.light .bg-slate-900\/50 {
+	background-color: rgba(241, 245, 249, 0.5);
+}
+
+/* Mengubah teks putih menjadi gelap */
+html.light .text-white {
+	color: #0f172a;
+} /* Slate-900 */
+html.light .text-slate-200,
+html.light .text-slate-300 {
+	color: #334155;
+} /* Slate-700 */
+html.light .text-slate-400,
+html.light .text-slate-500 {
+	color: #64748b;
+} /* Slate-500 */
+
+/* Menyesuaikan border */
+html.light .border-slate-800,
+html.light .border-slate-700 {
+	border-color: #e2e8f0;
+} /* Slate-200 */
+
+/* Sedikit penyesuaian untuk aksen agar tidak terlalu menyala di background putih */
+html.light .text-emerald-400 {
+	color: #059669;
+}
+html.light .text-orange-400 {
+	color: #ea580c;
+}
+html.light .bg-slate-800\/50 {
+	background-color: rgba(241, 245, 249, 0.8);
+}
