@@ -1,6 +1,6 @@
 @import 'tailwindcss';
-@plugin '@tailwindcss/forms';
-@plugin '@tailwindcss/typography';
+@plugin '@tailwindcss/forms'; /* NOSONAR */
+@plugin '@tailwindcss/typography'; /* NOSONAR */
 
 /* ... (kode CSS Anda sebelumnya) ... */
 

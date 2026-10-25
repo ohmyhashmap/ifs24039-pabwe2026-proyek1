@@ -31,14 +31,18 @@ export const PROTECTED_PATHS = ['/dashboard', '/laporan-saya', '/profil', '/peng
 export const GUEST_ONLY_PATHS = ['/auth/login', '/auth/register'];
 
 export function normalizePath(pathname: string): string {
-	return pathname.replace(/\/+$/, '') || '/';
+	let end = pathname.length;
+	while (end > 0 && pathname.charCodeAt(end - 1) === 47) {
+		end--;
+	}
+	return pathname.slice(0, end) || '/';
 }
 
 /** Pindah halaman tanpa reload; didengarkan oleh router di App.svelte. */
 export function navigate(path: string, replace = false) {
-	if (replace) window.history.replaceState({}, '', path);
-	else window.history.pushState({}, '', path);
-	window.dispatchEvent(new PopStateEvent('popstate'));
+	if (replace) globalThis.history.replaceState({}, '', path);
+	else globalThis.history.pushState({}, '', path);
+	globalThis.dispatchEvent(new PopStateEvent('popstate'));
 }
 
 export function setSession(token: string, user: User) {

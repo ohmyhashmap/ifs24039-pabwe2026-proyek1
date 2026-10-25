@@ -13,9 +13,11 @@ export function apiResponse(data: unknown, status = 200, error?: string) {
 export function stubFetch(
 	handler: (url: string, init?: RequestInit) => Response | Promise<Response>
 ) {
-	const mock = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) =>
-		handler(String(input), init)
-	);
+	const mock = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+		const url =
+			typeof input === 'string' ? input : input instanceof URL ? input.toString() : input.url;
+		return handler(url, init);
+	});
 	vi.stubGlobal('fetch', mock);
 	return mock;
 }

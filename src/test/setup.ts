@@ -13,9 +13,9 @@ vi.mock('maplibre-gl', () => {
 	};
 
 	class MapMock {
-		private handlers = new Map<string, (event?: any) => void>();
-		private sources = new Map<string, any>();
-		private layers = new Map<string, any>();
+		private readonly handlers = new Map<string, (event?: any) => void>();
+		private readonly sources = new Map<string, any>();
+		private readonly layers = new Map<string, any>();
 
 		constructor() {
 			mapState.instances.push(this);
@@ -30,7 +30,11 @@ vi.mock('maplibre-gl', () => {
 				typeof layerOrHandler === 'function' ? event : `${event}:${layerOrHandler}`,
 				typeof layerOrHandler === 'function' ? layerOrHandler : handler!
 			);
-			if (event === 'load') queueMicrotask(() => void this.handlers.get('load')?.());
+			if (event === 'load') {
+				queueMicrotask(() => {
+					this.handlers.get('load')?.();
+				});
+			}
 			return this;
 		}
 
