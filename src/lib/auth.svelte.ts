@@ -32,7 +32,7 @@ export const GUEST_ONLY_PATHS = ['/auth/login', '/auth/register'];
 
 export function normalizePath(pathname: string): string {
 	let end = pathname.length;
-	while (end > 0 && pathname.charCodeAt(end - 1) === 47) {
+	while (end > 0 && pathname.codePointAt(end - 1) === 47) {
 		end--;
 	}
 	return pathname.slice(0, end) || '/';
