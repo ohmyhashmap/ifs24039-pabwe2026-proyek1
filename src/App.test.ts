@@ -47,7 +47,7 @@ describe('SPA navigation', () => {
 		await fireEvent.click(screen.getByRole('link', { name: 'Pelajari Inovasi' }));
 
 		expect(window.location.pathname).toBe('/tentang');
-		expect(screen.getByRole('heading', { name: 'Tentang SigapAsap' })).toBeInTheDocument();
+		expect(await screen.findByRole('heading', { name: 'Tentang SigapAsap' })).toBeInTheDocument();
 	});
 
 	it.each([
@@ -67,14 +67,16 @@ describe('SPA navigation', () => {
 		}
 	});
 
-	it('normalizes trailing slashes and displays the not-found route for unknown paths', () => {
+	it('normalizes trailing slashes and displays the not-found route for unknown paths', async () => {
 		window.history.replaceState({}, '', '/tentang///');
 		const { unmount } = render(App);
-		expect(screen.getByRole('heading', { name: 'Tentang SigapAsap' })).toBeInTheDocument();
+		expect(await screen.findByRole('heading', { name: 'Tentang SigapAsap' })).toBeInTheDocument();
 		unmount();
 		window.history.replaceState({}, '', '/unknown');
 		render(App);
-		expect(screen.getByRole('heading', { name: 'Halaman tidak ditemukan' })).toBeInTheDocument();
+		expect(
+			await screen.findByRole('heading', { name: 'Halaman tidak ditemukan' })
+		).toBeInTheDocument();
 	});
 
 	it('responds to browser back and forward navigation', async () => {
