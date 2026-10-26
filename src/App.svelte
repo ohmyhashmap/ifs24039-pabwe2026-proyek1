@@ -388,11 +388,11 @@
 					</div>
 
 					<div class="md:col-span-3">
-						<h4
+						<h3
 							class="mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-widest text-white uppercase transition-colors duration-500"
 						>
 							Sumber Data
-						</h4>
+						</h3>
 						<ul class="space-y-3 text-sm font-medium">
 							<li>
 								<a
@@ -453,11 +453,11 @@
 					</div>
 
 					<div class="md:col-span-4">
-						<h4
+						<h3
 							class="mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-widest text-white uppercase transition-colors duration-500"
 						>
 							Kontak Kami
-						</h4>
+						</h3>
 						<ul class="space-y-4 text-sm font-medium text-slate-400">
 							<li class="flex items-start gap-3">
 								<span class="mt-0.5 text-lg text-emerald-500">📍</span>

@@ -1,0 +1,213 @@
+{
+  "meta": {
+    "audited_url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud",
+    "extracted_at": "2026-10-26T09:47:34.948Z",
+    "source_file": "halaman.html"
+  },
+  "scores": {
+    "final": 92,
+    "max": 100,
+    "raw": 93,
+    "penalty": -1,
+    "performance": 88,
+    "accessibility": 98,
+    "best_practices": 100,
+    "seo": 91,
+    "axe_accessibility": 88
+  },
+  "lighthouse_metrics": [
+    {
+      "metric": "First Contentful Paint",
+      "value": "2.7 s",
+      "score": 59,
+      "status": "warn"
+    },
+    {
+      "metric": "Largest Contentful Paint",
+      "value": "3.0 s",
+      "score": 77,
+      "status": "warn"
+    },
+    {
+      "metric": "Speed Index",
+      "value": "3.0 s",
+      "score": 94,
+      "status": "good"
+    },
+    {
+      "metric": "Total Blocking Time",
+      "value": "50 ms",
+      "score": 100,
+      "status": "good"
+    },
+    {
+      "metric": "Max Potential First Input Delay",
+      "value": "100 ms",
+      "score": 96,
+      "status": "good"
+    },
+    {
+      "metric": "Cumulative Layout Shift",
+      "value": "0",
+      "score": 100,
+      "status": "good"
+    },
+    {
+      "metric": "Initial server response time was short",
+      "value": "Root document took 50 ms",
+      "score": 100,
+      "status": "good"
+    },
+    {
+      "metric": "Time to Interactive",
+      "value": "3.0 s",
+      "score": 95,
+      "status": "good"
+    }
+  ],
+  "failed_audits": [
+    {
+      "title": "Largest Contentful Paint element",
+      "badge": "3,030 ms",
+      "description": "This is the largest contentful element painted within the viewport. [Learn more about the Largest Contentful Paint element](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-largest-contentful-paint/)",
+      "items": []
+    },
+    {
+      "title": "Heading elements are not in a sequentially-descending order",
+      "badge": "",
+      "description": "Properly ordered headings that do not skip levels convey the semantic structure of the page, making it easier to navigate and understand when using assistive technologies. [Learn more about heading order](https://dequeuniversity.com/rules/axe/4.10/heading-order).",
+      "items": [
+        {
+          "code": "<h4 class=\"mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold trackin…\">",
+          "label": "Label: SUMBER DATA"
+        }
+      ]
+    },
+    {
+      "title": "Serve static assets with an efficient cache policy",
+      "badge": "3 resources found",
+      "description": "A long cache lifetime can speed up repeat visits to your page. [Learn more about efficient cache policies](https://developer.chrome.com/docs/lighthouse/performance/uses-long-cache-ttl/).",
+      "items": [
+        {
+          "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BLxw_dQB.js",
+          "wasted": "Wasted: 131.1 KB"
+        },
+        {
+          "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BJX4AcbZ.css",
+          "wasted": "Wasted: 84.4 KB"
+        },
+        {
+          "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/hero-1280.avif",
+          "wasted": "Wasted: 34.2 KB"
+        }
+      ]
+    },
+    {
+      "title": "Eliminate render-blocking resources",
+      "badge": "Est savings of 150 ms",
+      "description": "Resources are blocking the first paint of your page. Consider delivering critical JS/CSS inline and deferring all non-critical JS/styles. [Learn how to eliminate render-blocking resources](https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources/).",
+      "items": [
+        {
+          "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BJX4AcbZ.css",
+          "wasted": "Delay: 1087 ms"
+        }
+      ]
+    },
+    {
+      "title": "Reduce unused JavaScript",
+      "badge": "Est savings of 56 KiB",
+      "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/).",
+      "items": [
+        {
+          "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BLxw_dQB.js",
+          "wasted": "Wasted: 56 KB"
+        }
+      ]
+    },
+    {
+      "title": "Enable text compression",
+      "badge": "Est savings of 161 KiB",
+      "description": "Text-based resources should be served with compression (gzip, deflate or brotli) to minimize total network bytes. [Learn more about text compression](https://developer.chrome.com/docs/lighthouse/performance/uses-text-compression/).",
+      "items": [
+        {
+          "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BLxw_dQB.js",
+          "wasted": "Wasted: 89.9 KB"
+        },
+        {
+          "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BJX4AcbZ.css",
+          "wasted": "Wasted: 71.2 KB"
+        }
+      ]
+    },
+    {
+      "title": "robots.txt is not valid",
+      "badge": "1 error found",
+      "description": "If your robots.txt file is malformed, crawlers may not be able to understand how you want your website to be crawled or indexed. [Learn more about robots.txt](https://developer.chrome.com/docs/lighthouse/seo/invalid-robots-txt/).",
+      "items": []
+    },
+    {
+      "title": "Use efficient cache lifetimes",
+      "badge": "Est savings of 250 KiB",
+      "description": "A long cache lifetime can speed up repeat visits to your page. [Learn more](https://web.dev/uses-long-cache-ttl/).",
+      "items": [
+        {
+          "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BLxw_dQB.js",
+          "wasted": "Wasted: 131.1 KB"
+        },
+        {
+          "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BJX4AcbZ.css",
+          "wasted": "Wasted: 84.4 KB"
+        },
+        {
+          "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/hero-1280.avif",
+          "wasted": "Wasted: 34.2 KB"
+        }
+      ]
+    },
+    {
+      "title": "Network dependency tree",
+      "badge": "",
+      "description": "[Avoid chaining critical requests](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains) by reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load.",
+      "items": []
+    },
+    {
+      "title": "Render blocking requests",
+      "badge": "Est savings of 750 ms",
+      "description": "Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) can move these network requests out of the critical path.",
+      "items": [
+        {
+          "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BJX4AcbZ.css",
+          "wasted": "Delay: 1087 ms"
+        }
+      ]
+    }
+  ],
+  "axe_violations": [
+    {
+      "severity": "moderate",
+      "title": "Heading levels should only increase by one",
+      "count": "6 Elemen",
+      "description": "Deskripsi: Ensure the order of headings is semantically correct",
+      "elements": [
+        "<h4 class=\"mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-widest text-white uppercase transition-colors duration-500\">Sumber Data</h4>",
+        "<h4 class=\"mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-widest text-white uppercase transition-colors duration-500\">Sumber Data</h4>",
+        "<h4 class=\"mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-widest text-white uppercase transition-colors duration-500\">Sumber Data</h4>",
+        "<h4 class=\"mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-widest text-white uppercase transition-colors duration-500\">Sumber Data</h4>",
+        "<h4 class=\"mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-widest text-white uppercase transition-colors duration-500\">Sumber Data</h4>",
+        "<h4 class=\"mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-widest text-white uppercase transition-colors duration-500\">Sumber Data</h4>"
+      ]
+    }
+  ],
+  "crawled_paths": {
+    "public": [
+      "/auth/register",
+      "/auth/login"
+    ],
+    "authenticated": [
+      "/dashboard",
+      "/profil",
+      "/pengaturan",
+      "/laporan-saya"
+    ]
+  }
+}
