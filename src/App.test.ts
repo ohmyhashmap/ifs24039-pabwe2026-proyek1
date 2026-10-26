@@ -79,6 +79,26 @@ describe('SPA navigation', () => {
 		).toBeInTheDocument();
 	});
 
+	it('logs lazy-route load failures and keeps the current page', async () => {
+		const loadError = new Error('route chunk failed');
+		vi.doMock('./pages/Tentang.svelte', () => {
+			throw loadError;
+		});
+		const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+		try {
+			render(App);
+			await fireEvent.click(screen.getByRole('link', { name: 'Pelajari Inovasi' }));
+
+			await waitFor(() =>
+				expect(consoleError).toHaveBeenCalledWith('Gagal memuat halaman:', expect.any(Error))
+			);
+		} finally {
+			consoleError.mockRestore();
+			vi.doUnmock('./pages/Tentang.svelte');
+		}
+	});
+
 	it('responds to browser back and forward navigation', async () => {
 		render(App);
 		await fireEvent.click(screen.getByRole('link', { name: 'Pelajari Inovasi' }));
