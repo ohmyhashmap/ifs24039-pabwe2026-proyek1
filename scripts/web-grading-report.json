@@ -1,50 +1,50 @@
 {
   "meta": {
     "audited_url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud",
-    "extracted_at": "2026-10-26T09:47:34.948Z",
+    "extracted_at": "2026-10-26T10:08:51.701Z",
     "source_file": "halaman.html"
   },
   "scores": {
-    "final": 92,
+    "final": 94,
     "max": 100,
-    "raw": 93,
+    "raw": 95,
     "penalty": -1,
     "performance": 88,
     "accessibility": 98,
     "best_practices": 100,
-    "seo": 91,
-    "axe_accessibility": 88
+    "seo": 100,
+    "axe_accessibility": 90
   },
   "lighthouse_metrics": [
     {
       "metric": "First Contentful Paint",
-      "value": "2.7 s",
-      "score": 59,
+      "value": "2.6 s",
+      "score": 62,
       "status": "warn"
     },
     {
       "metric": "Largest Contentful Paint",
-      "value": "3.0 s",
-      "score": 77,
+      "value": "2.8 s",
+      "score": 83,
       "status": "warn"
     },
     {
       "metric": "Speed Index",
-      "value": "3.0 s",
-      "score": 94,
+      "value": "2.9 s",
+      "score": 95,
       "status": "good"
     },
     {
       "metric": "Total Blocking Time",
-      "value": "50 ms",
-      "score": 100,
+      "value": "100 ms",
+      "score": 98,
       "status": "good"
     },
     {
       "metric": "Max Potential First Input Delay",
-      "value": "100 ms",
-      "score": 96,
-      "status": "good"
+      "value": "210 ms",
+      "score": 62,
+      "status": "warn"
     },
     {
       "metric": "Cumulative Layout Shift",
@@ -54,21 +54,21 @@
     },
     {
       "metric": "Initial server response time was short",
-      "value": "Root document took 50 ms",
+      "value": "Root document took 90 ms",
       "score": 100,
       "status": "good"
     },
     {
       "metric": "Time to Interactive",
-      "value": "3.0 s",
-      "score": 95,
+      "value": "2.8 s",
+      "score": 97,
       "status": "good"
     }
   ],
   "failed_audits": [
     {
       "title": "Largest Contentful Paint element",
-      "badge": "3,030 ms",
+      "badge": "2,790 ms",
       "description": "This is the largest contentful element painted within the viewport. [Learn more about the Largest Contentful Paint element](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-largest-contentful-paint/)",
       "items": []
     },
@@ -78,7 +78,7 @@
       "description": "Properly ordered headings that do not skip levels convey the semantic structure of the page, making it easier to navigate and understand when using assistive technologies. [Learn more about heading order](https://dequeuniversity.com/rules/axe/4.10/heading-order).",
       "items": [
         {
-          "code": "<h4 class=\"mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold trackin…\">",
+          "code": "<h3 class=\"mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold trackin…\">",
           "label": "Label: SUMBER DATA"
         }
       ]
@@ -89,12 +89,12 @@
       "description": "A long cache lifetime can speed up repeat visits to your page. [Learn more about efficient cache policies](https://developer.chrome.com/docs/lighthouse/performance/uses-long-cache-ttl/).",
       "items": [
         {
-          "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BLxw_dQB.js",
+          "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-DrJ6b74S.js",
           "wasted": "Wasted: 131.1 KB"
         },
         {
-          "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BJX4AcbZ.css",
-          "wasted": "Wasted: 84.4 KB"
+          "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BCF3wUSO.css",
+          "wasted": "Wasted: 87 KB"
         },
         {
           "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/hero-1280.avif",
@@ -108,8 +108,8 @@
       "description": "Resources are blocking the first paint of your page. Consider delivering critical JS/CSS inline and deferring all non-critical JS/styles. [Learn how to eliminate render-blocking resources](https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources/).",
       "items": [
         {
-          "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BJX4AcbZ.css",
-          "wasted": "Delay: 1087 ms"
+          "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BCF3wUSO.css",
+          "wasted": "Delay: 1113 ms"
         }
       ]
     },
@@ -119,44 +119,38 @@
       "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/).",
       "items": [
         {
-          "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BLxw_dQB.js",
+          "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-DrJ6b74S.js",
           "wasted": "Wasted: 56 KB"
         }
       ]
     },
     {
       "title": "Enable text compression",
-      "badge": "Est savings of 161 KiB",
+      "badge": "Est savings of 163 KiB",
       "description": "Text-based resources should be served with compression (gzip, deflate or brotli) to minimize total network bytes. [Learn more about text compression](https://developer.chrome.com/docs/lighthouse/performance/uses-text-compression/).",
       "items": [
         {
-          "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BLxw_dQB.js",
+          "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-DrJ6b74S.js",
           "wasted": "Wasted: 89.9 KB"
         },
         {
-          "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BJX4AcbZ.css",
-          "wasted": "Wasted: 71.2 KB"
+          "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BCF3wUSO.css",
+          "wasted": "Wasted: 73.4 KB"
         }
       ]
     },
     {
-      "title": "robots.txt is not valid",
-      "badge": "1 error found",
-      "description": "If your robots.txt file is malformed, crawlers may not be able to understand how you want your website to be crawled or indexed. [Learn more about robots.txt](https://developer.chrome.com/docs/lighthouse/seo/invalid-robots-txt/).",
-      "items": []
-    },
-    {
       "title": "Use efficient cache lifetimes",
-      "badge": "Est savings of 250 KiB",
+      "badge": "Est savings of 252 KiB",
       "description": "A long cache lifetime can speed up repeat visits to your page. [Learn more](https://web.dev/uses-long-cache-ttl/).",
       "items": [
         {
-          "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BLxw_dQB.js",
+          "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-DrJ6b74S.js",
           "wasted": "Wasted: 131.1 KB"
         },
         {
-          "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BJX4AcbZ.css",
-          "wasted": "Wasted: 84.4 KB"
+          "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BCF3wUSO.css",
+          "wasted": "Wasted: 87 KB"
         },
         {
           "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/hero-1280.avif",
@@ -176,8 +170,8 @@
       "description": "Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources) can move these network requests out of the critical path.",
       "items": [
         {
-          "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BJX4AcbZ.css",
-          "wasted": "Delay: 1087 ms"
+          "url": "https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BCF3wUSO.css",
+          "wasted": "Delay: 1113 ms"
         }
       ]
     }
@@ -186,15 +180,14 @@
     {
       "severity": "moderate",
       "title": "Heading levels should only increase by one",
-      "count": "6 Elemen",
+      "count": "5 Elemen",
       "description": "Deskripsi: Ensure the order of headings is semantically correct",
       "elements": [
-        "<h4 class=\"mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-widest text-white uppercase transition-colors duration-500\">Sumber Data</h4>",
-        "<h4 class=\"mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-widest text-white uppercase transition-colors duration-500\">Sumber Data</h4>",
-        "<h4 class=\"mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-widest text-white uppercase transition-colors duration-500\">Sumber Data</h4>",
-        "<h4 class=\"mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-widest text-white uppercase transition-colors duration-500\">Sumber Data</h4>",
-        "<h4 class=\"mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-widest text-white uppercase transition-colors duration-500\">Sumber Data</h4>",
-        "<h4 class=\"mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-widest text-white uppercase transition-colors duration-500\">Sumber Data</h4>"
+        "<h3 class=\"mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-widest text-white uppercase transition-colors duration-500\">Sumber Data</h3>",
+        "<h3 class=\"mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-widest text-white uppercase transition-colors duration-500\">Sumber Data</h3>",
+        "<h3 class=\"mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-widest text-white uppercase transition-colors duration-500\">Sumber Data</h3>",
+        "<h3 class=\"mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-widest text-white uppercase transition-colors duration-500\">Sumber Data</h3>",
+        "<h3 class=\"mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-widest text-white uppercase transition-colors duration-500\">Sumber Data</h3>"
       ]
     }
   ],

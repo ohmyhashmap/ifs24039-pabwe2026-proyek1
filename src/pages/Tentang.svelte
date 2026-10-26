@@ -17,7 +17,7 @@
 			wilayah lain. Oleh karena itu, pemantauan titik api saja tidak cukup.
 		</p>
 
-		<h3 class="mt-8 mb-4 text-2xl font-bold text-white">Arsitektur & Data Pipeline</h3>
+		<h2 class="mt-8 mb-4 text-2xl font-bold text-white">Arsitektur & Data Pipeline</h2>
 		<p class="mb-4">
 			Sistem ini dibangun menggunakan arsitektur modern <em class="text-slate-200">Client-Server</em
 			>

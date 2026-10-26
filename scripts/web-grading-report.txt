@@ -3,14 +3,14 @@
 ══════════════════════════════════════════════════════════════════════
 URL          : https://ifs24039-pabwe2026-proyek1.s1if.cloud
 File Sumber  : halaman.html
-Diekstrak    : 26/10/2026, 16.47.34
+Diekstrak    : 26/10/2026, 17.08.51
 
 ──────────────────────────────────────────────────────────────────────
   SKOR AKHIR
 ──────────────────────────────────────────────────────────────────────
-  Skor Raw         : 93
+  Skor Raw         : 95
   Penalti          : -1
-  SKOR AKHIR       : 92/100
+  SKOR AKHIR       : 94/100
 
 ──────────────────────────────────────────────────────────────────────
   SKOR KATEGORI
@@ -18,87 +18,82 @@ Diekstrak    : 26/10/2026, 16.47.34
   ⚠️ Performance           : 88/100
   ✅ Accessibility         : 98/100
   ✅ Best Practices        : 100/100
-  ✅ SEO                   : 91/100
-  ⚠️ Axe Accessibility     : 88/100
+  ✅ SEO                   : 100/100
+  ✅ Axe Accessibility     : 90/100
 
 ──────────────────────────────────────────────────────────────────────
   METRIK PERFORMA
 ──────────────────────────────────────────────────────────────────────
-  ⚠️ First Contentful Paint             : 2.7 s           (skor: 59)
-  ⚠️ Largest Contentful Paint           : 3.0 s           (skor: 77)
-  ✅ Speed Index                        : 3.0 s           (skor: 94)
-  ✅ Total Blocking Time                : 50 ms           (skor: 100)
-  ✅ Max Potential First Input Delay    : 100 ms          (skor: 96)
+  ⚠️ First Contentful Paint             : 2.6 s           (skor: 62)
+  ⚠️ Largest Contentful Paint           : 2.8 s           (skor: 83)
+  ✅ Speed Index                        : 2.9 s           (skor: 95)
+  ✅ Total Blocking Time                : 100 ms          (skor: 98)
+  ⚠️ Max Potential First Input Delay    : 210 ms          (skor: 62)
   ✅ Cumulative Layout Shift            : 0               (skor: 100)
-  ✅ Initial server response time was short: Root document took 50 ms (skor: 100)
-  ✅ Time to Interactive                : 3.0 s           (skor: 95)
+  ✅ Initial server response time was short: Root document took 90 ms (skor: 100)
+  ✅ Time to Interactive                : 2.8 s           (skor: 97)
 
 ──────────────────────────────────────────────────────────────────────
-  AUDIT GAGAL (10)
+  AUDIT GAGAL (9)
 ──────────────────────────────────────────────────────────────────────
   1. Largest Contentful Paint element
-     Info   : 3,030 ms
+     Info   : 2,790 ms
      Detail : This is the largest contentful element painted within the viewport.
 
   2. Heading elements are not in a sequentially-descending order
      Detail : Properly ordered headings that do not skip levels convey the semantic structure of the page, making it easier to navigate and understand when using assistive technologies. .
-       • `<h4 class="mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold trackin…">`  (Label: SUMBER DATA)
+       • `<h3 class="mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold trackin…">`  (Label: SUMBER DATA)
 
   3. Serve static assets with an efficient cache policy
      Info   : 3 resources found
      Detail : A long cache lifetime can speed up repeat visits to your page. .
-       • https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BLxw_dQB.js  [Wasted: 131.1 KB]
-       • https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BJX4AcbZ.css  [Wasted: 84.4 KB]
+       • https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-DrJ6b74S.js  [Wasted: 131.1 KB]
+       • https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BCF3wUSO.css  [Wasted: 87 KB]
        • https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/hero-1280.avif  [Wasted: 34.2 KB]
 
   4. Eliminate render-blocking resources
      Info   : Est savings of 150 ms
      Detail : Resources are blocking the first paint of your page. Consider delivering critical JS/CSS inline and deferring all non-critical JS/styles. .
-       • https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BJX4AcbZ.css  [Delay: 1087 ms]
+       • https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BCF3wUSO.css  [Delay: 1113 ms]
 
   5. Reduce unused JavaScript
      Info   : Est savings of 56 KiB
      Detail : Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. .
-       • https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BLxw_dQB.js  [Wasted: 56 KB]
+       • https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-DrJ6b74S.js  [Wasted: 56 KB]
 
   6. Enable text compression
-     Info   : Est savings of 161 KiB
+     Info   : Est savings of 163 KiB
      Detail : Text-based resources should be served with compression (gzip, deflate or brotli) to minimize total network bytes. .
-       • https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BLxw_dQB.js  [Wasted: 89.9 KB]
-       • https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BJX4AcbZ.css  [Wasted: 71.2 KB]
+       • https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-DrJ6b74S.js  [Wasted: 89.9 KB]
+       • https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BCF3wUSO.css  [Wasted: 73.4 KB]
 
-  7. robots.txt is not valid
-     Info   : 1 error found
-     Detail : If your robots.txt file is malformed, crawlers may not be able to understand how you want your website to be crawled or indexed. .
-
-  8. Use efficient cache lifetimes
-     Info   : Est savings of 250 KiB
+  7. Use efficient cache lifetimes
+     Info   : Est savings of 252 KiB
      Detail : A long cache lifetime can speed up repeat visits to your page. .
-       • https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BLxw_dQB.js  [Wasted: 131.1 KB]
-       • https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BJX4AcbZ.css  [Wasted: 84.4 KB]
+       • https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-DrJ6b74S.js  [Wasted: 131.1 KB]
+       • https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BCF3wUSO.css  [Wasted: 87 KB]
        • https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/hero-1280.avif  [Wasted: 34.2 KB]
 
-  9. Network dependency tree
+  8. Network dependency tree
      Detail : by reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load.
 
-  10. Render blocking requests
+  9. Render blocking requests
      Info   : Est savings of 750 ms
      Detail : Requests are blocking the page's initial render, which may delay LCP.  can move these network requests out of the critical path.
-       • https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BJX4AcbZ.css  [Delay: 1087 ms]
+       • https://ifs24039-pabwe2026-proyek1.s1if.cloud/assets/index-BCF3wUSO.css  [Delay: 1113 ms]
 
 ──────────────────────────────────────────────────────────────────────
   PELANGGARAN AXE (1)
 ──────────────────────────────────────────────────────────────────────
   1. [MODERATE] Heading levels should only increase by one
-     Jumlah : 6 Elemen
+     Jumlah : 5 Elemen
      Detail : Deskripsi: Ensure the order of headings is semantically correct
      Elemen :
-       - `<h4 class="mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-wid…`
-       - `<h4 class="mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-wid…`
-       - `<h4 class="mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-wid…`
-       - `<h4 class="mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-wid…`
-       - `<h4 class="mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-wid…`
-       - `<h4 class="mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-wid…`
+       - `<h3 class="mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-wid…`
+       - `<h3 class="mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-wid…`
+       - `<h3 class="mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-wid…`
+       - `<h3 class="mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-wid…`
+       - `<h3 class="mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-wid…`
 
 ──────────────────────────────────────────────────────────────────────
   CRAWLED PATHS

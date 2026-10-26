@@ -2,26 +2,29 @@
 	import { onMount, type Component } from 'svelte';
 	import './app.css';
 	import { auth, GUEST_ONLY_PATHS, logout, normalizePath, PROTECTED_PATHS } from '#lib/auth.svelte';
-	import Berita from './pages/Berita.svelte';
-	import BeritaDetail from './pages/BeritaDetail.svelte';
-	import Dashboard from './pages/Dashboard.svelte';
 	import Home from './pages/Home.svelte';
-	import LaporanSaya from './pages/LaporanSaya.svelte';
-	import Login from './pages/auth/Login.svelte';
-	import Pengaturan from './pages/Pengaturan.svelte';
-	import Profil from './pages/Profil.svelte';
-	import Register from './pages/auth/Register.svelte';
-	import Lapor from './pages/Lapor.svelte';
-	import NotFound from './pages/NotFound.svelte';
-	import Peta from './pages/Peta.svelte';
-	import Statistik from './pages/Statistik.svelte';
-	import Tentang from './pages/Tentang.svelte';
 
 	let currentPath = $state(window.location.pathname);
 	let currentUrl = $state(
 		`${window.location.pathname}${window.location.search}${window.location.hash}`
 	);
 	let isMobileMenuOpen = $state(false);
+	let currentPage = $state<Component>(Home);
+	let pageLoadVersion = 0;
+
+	const pageLoaders: Record<string, () => Promise<{ default: Component }>> = {
+		'/auth/login': () => import('./pages/auth/Login.svelte'),
+		'/auth/register': () => import('./pages/auth/Register.svelte'),
+		'/dashboard': () => import('./pages/Dashboard.svelte'),
+		'/laporan-saya': () => import('./pages/LaporanSaya.svelte'),
+		'/profil': () => import('./pages/Profil.svelte'),
+		'/pengaturan': () => import('./pages/Pengaturan.svelte'),
+		'/berita': () => import('./pages/Berita.svelte'),
+		'/lapor': () => import('./pages/Lapor.svelte'),
+		'/peta': () => import('./pages/Peta.svelte'),
+		'/statistik': () => import('./pages/Statistik.svelte'),
+		'/tentang': () => import('./pages/Tentang.svelte')
+	};
 
 	// Halaman terproteksi butuh login; halaman login/daftar tidak untuk yang sudah login.
 	const guardRedirect = (pathname: string): string | null => {
@@ -31,25 +34,16 @@
 		return null;
 	};
 
-	const resolvePage = (pathname: string): Component => {
+	const resolvePage = async (pathname: string): Promise<Component> => {
 		const normalizedPath = normalizePath(pathname);
 		if (normalizedPath === '/') return Home;
-		if (normalizedPath === '/auth/login') return Login;
-		if (normalizedPath === '/auth/register') return Register;
-		if (normalizedPath === '/dashboard') return Dashboard;
-		if (normalizedPath === '/laporan-saya') return LaporanSaya;
-		if (normalizedPath === '/profil') return Profil;
-		if (normalizedPath === '/pengaturan') return Pengaturan;
-		if (normalizedPath === '/berita') return Berita;
-		if (/^\/berita\/[^/]+$/.test(normalizedPath)) return BeritaDetail;
-		if (normalizedPath === '/lapor') return Lapor;
-		if (normalizedPath === '/peta') return Peta;
-		if (normalizedPath === '/statistik') return Statistik;
-		if (normalizedPath === '/tentang') return Tentang;
-		return NotFound;
+		if (/^\/berita\/[^/]+$/.test(normalizedPath)) {
+			return (await import('./pages/BeritaDetail.svelte')).default;
+		}
+		const loader = pageLoaders[normalizedPath];
+		if (loader) return (await loader()).default;
+		return (await import('./pages/NotFound.svelte')).default;
 	};
-
-	let currentPage: Component = $derived(resolvePage(guardRedirect(currentPath) ?? currentPath));
 
 	const updateLocation = () => {
 		const redirect = guardRedirect(window.location.pathname);
@@ -58,6 +52,14 @@
 		}
 		currentPath = window.location.pathname;
 		currentUrl = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+		const loadVersion = ++pageLoadVersion;
+		void resolvePage(currentPath)
+			.then((page) => {
+				if (loadVersion === pageLoadVersion) currentPage = page;
+			})
+			.catch((error: unknown) => {
+				console.error('Gagal memuat halaman:', error);
+			});
 	};
 
 	// Sesi berubah (login/logout/401) -> sinkronkan URL dengan aturan guard.
@@ -388,11 +390,11 @@
 					</div>
 
 					<div class="md:col-span-3">
-						<h3
+						<h2
 							class="mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-widest text-white uppercase transition-colors duration-500"
 						>
 							Sumber Data
-						</h3>
+						</h2>
 						<ul class="space-y-3 text-sm font-medium">
 							<li>
 								<a
@@ -453,11 +455,11 @@
 					</div>
 
 					<div class="md:col-span-4">
-						<h3
+						<h2
 							class="mb-4 inline-block border-b border-slate-800 pb-2 text-xs font-bold tracking-widest text-white uppercase transition-colors duration-500"
 						>
 							Kontak Kami
-						</h3>
+						</h2>
 						<ul class="space-y-4 text-sm font-medium text-slate-400">
 							<li class="flex items-start gap-3">
 								<span class="mt-0.5 text-lg text-emerald-500">📍</span>

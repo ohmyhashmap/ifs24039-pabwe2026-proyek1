@@ -152,14 +152,14 @@
 								>
 									{news.category}
 								</div>
-								<h3
+								<h2
 									class="text-xl leading-snug font-bold text-slate-800 group-hover:text-{activeTab ===
 									'internal'
 										? 'emerald'
 										: 'blue'}-600 mb-2 transition-colors"
 								>
 									{news.title}
-								</h3>
+								</h2>
 								<p class="mb-3 line-clamp-2 text-sm text-slate-600">{news.excerpt}</p>
 								<div class="mt-auto flex items-center gap-3 text-xs text-slate-400">
 									<span>{news.author}</span>
@@ -178,9 +178,9 @@
 			<!-- SIDEBAR -->
 			<div class="lg:col-span-4">
 				<div class="sticky top-24 rounded-xl border border-slate-200 bg-slate-50 p-6">
-					<h3 class="mb-6 flex items-center gap-2 text-xl font-bold text-slate-800">
+					<h2 class="mb-6 flex items-center gap-2 text-xl font-bold text-slate-800">
 						<span class="text-red-500">🔥</span> Info Terkait
-					</h3>
+					</h2>
 					<div class="space-y-4">
 						<div
 							class="rounded-lg border border-slate-200 bg-white p-4 text-sm text-slate-600 shadow-sm"

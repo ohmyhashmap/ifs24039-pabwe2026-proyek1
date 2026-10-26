@@ -183,9 +183,9 @@
 		<!-- Berita Terkait -->
 		{#if relatedNews.length > 0}
 			<div class="mx-auto mt-20 max-w-7xl border-t border-slate-800 px-4 pt-10">
-				<h3 class="mb-8 flex items-center gap-2 text-2xl font-bold text-white">
+				<h2 class="mb-8 flex items-center gap-2 text-2xl font-bold text-white">
 					<span class="inline-block h-6 w-1.5 rounded-full bg-emerald-500"></span> Berita Terkait
-				</h3>
+				</h2>
 				<div class="grid gap-6 md:grid-cols-3">
 					{#each relatedNews as news}
 						<a
@@ -208,11 +208,11 @@
 								</div>
 							</div>
 							<div class="p-5">
-								<h4
+								<h3
 									class="line-clamp-2 leading-snug font-bold text-white transition-colors group-hover:text-emerald-400"
 								>
 									{news.title}
-								</h4>
+								</h3>
 							</div>
 						</a>
 					{/each}
