@@ -9,26 +9,36 @@ import type { Plugin } from 'vite';
 const root = fileURLToPath(new URL('.', import.meta.url));
 
 /**
- * Converts render-blocking `<link rel="stylesheet">` tags injected by Vite
- * into non-render-blocking `<link rel="preload" as="style" onload="…">` with
- * a `<noscript>` fallback so the CSS is loaded asynchronously.
+ * Server `vite preview` does not read `vercel.json`, so cache and security
+ * headers are applied here for preview deployments.
  */
-function asyncCssPlugin(): Plugin {
+function cacheHeadersPlugin(): Plugin {
+	const apply = (req: { url?: string }, res: { setHeader: (k: string, v: string) => void }) => {
+		const url = (req.url ?? '').split('?')[0];
+		if (url.startsWith('/assets/')) {
+			res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+		} else if (url === '/' || url.endsWith('.html')) {
+			res.setHeader('Cache-Control', 'no-cache');
+		} else if (/\.(svg|ico|png|jpe?g|webp|avif|woff2?)$/.test(url)) {
+			res.setHeader('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800');
+		} else if (/\.(json|txt)$/.test(url)) {
+			res.setHeader('Cache-Control', 'public, max-age=3600, stale-while-revalidate=86400');
+		}
+		res.setHeader('X-Content-Type-Options', 'nosniff');
+	};
 	return {
-		name: 'async-css',
-		enforce: 'post',
-		transformIndexHtml(html) {
-			return html.replace(
-				/<link rel="stylesheet" crossorigin href="(\/assets\/[^"]+\.css)">/g,
-				(_match, href) =>
-					`<link rel="preload" as="style" crossorigin href="${href}" onload="this.onload=null;this.rel='stylesheet'">\n\t\t<noscript><link rel="stylesheet" crossorigin href="${href}"></noscript>`
-			);
+		name: 'cache-headers',
+		configurePreviewServer(server) {
+			server.middlewares.use((req, res, next) => {
+				apply(req, res);
+				next();
+			});
 		}
 	};
 }
 
 export default defineConfig({
-	plugins: [svelte(), svelteTesting(), tailwindcss(), asyncCssPlugin()],
+	plugins: [svelte(), svelteTesting(), tailwindcss(), cacheHeadersPlugin()],
 	resolve: {
 		alias: {
 			'#lib': path.resolve(root, 'src/lib')

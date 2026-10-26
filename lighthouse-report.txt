@@ -2,57 +2,53 @@
         LAPORAN LIGHTHOUSE (TEKS)
 ════════════════════════════════════════════════════════════════
 URL      : https://ifs24039-pabwe2026-proyek1.s1if.cloud/
-Waktu    : 25/10/2026, 23.28.18
+Waktu    : 26/10/2026, 16.06.35
 Versi LH : 13.5.0
 
 ────────────────────────────────────────────────────────────────
   SKOR KATEGORI
 ────────────────────────────────────────────────────────────────
-  ⚠️ Performance         : 64/100
+  ✅ Performance         : 91/100
   ✅ Accessibility       : 100/100
   ✅ Best Practices      : 100/100
-  ✅ SEO                 : 100/100
-  ⚠️ Agentic Browsing    : 74/100
+  ✅ SEO                 : 92/100
+  ✅ Agentic Browsing    : 98/100
 
 ────────────────────────────────────────────────────────────────
   METRIK PERFORMANCE UTAMA
 ────────────────────────────────────────────────────────────────
-  ⚠️ Largest Contentful Paint    : 1.8 s (skor: 70)
-  ⚠️ First Contentful Paint      : 1.4 s (skor: 62)
-  🚨 Cumulative Layout Shift     : 0.684 (skor: 7)
-  ✅ Total Blocking Time         : 0 ms (skor: 100)
-  ⚠️ Speed Index                 : 1.5 s (skor: 83)
+  ⚠️ Largest Contentful Paint    : 1.4 s (skor: 83)
+  ⚠️ First Contentful Paint      : 1.1 s (skor: 82)
+  ✅ Cumulative Layout Shift     : 0.001 (skor: 100)
+  ✅ Total Blocking Time         : 10 ms (skor: 100)
+  ⚠️ Speed Index                 : 1.7 s (skor: 75)
 
 ────────────────────────────────────────────────────────────────
   AUDIT YANG PERLU PERHATIAN (SKOR < 1)
 ────────────────────────────────────────────────────────────────
   ⚠️ First Contentful Paint
-     Nilai : 1.4 s
+     Nilai : 1.1 s
      Saran : First Contentful Paint marks the time at which the first text or image is painted. ....
 
   ⚠️ Largest Contentful Paint
-     Nilai : 1.8 s
+     Nilai : 1.4 s
      Saran : Largest Contentful Paint marks the time at which the largest text or image is painted. ...
 
   ⚠️ Speed Index
-     Nilai : 1.5 s
+     Nilai : 1.7 s
      Saran : Speed Index shows how quickly the contents of a page are visibly populated. ....
 
-  ⚠️ Cumulative Layout Shift
-     Nilai : 0.684
-     Saran : Cumulative Layout Shift measures the movement of visible elements within the viewport. ....
-
   ⚠️ Time to Interactive
-     Nilai : 1.8 s
+     Nilai : 1.4 s
      Saran : Time to Interactive is the amount of time it takes for the page to become fully interactive. ....
-
-  ❌ Avoid large layout shifts
-     Nilai : 5 layout shifts found
-     Saran : These are the largest layout shifts observed on the page. Each table item represents a single layout shift, and shows the element that shifted the mos...
 
   ❌ Reduce unused JavaScript
      Nilai : Est savings of 53 KiB
      Saran : Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. ....
+
+  ❌ robots.txt is not valid
+     Nilai : 1 error found
+     Saran : If your robots.txt file is malformed, crawlers may not be able to understand how you want your website to be crawled or indexed. ....
 
   ⚠️ `ai-catalog.json` schema is valid
      Saran : Valid `ai-catalog.json` manifests are required for autonomous AI agents and registries to discover and verify your resources. ....
@@ -60,9 +56,6 @@ Versi LH : 13.5.0
   ❌ Use efficient cache lifetimes
      Nilai : Est savings of 250 KiB
      Saran : A long cache lifetime can speed up repeat visits to your page. ....
-
-  ❌ Layout shift culprits
-     Saran : Layout shifts occur when elements move absent any user interaction. , such as elements being added, removed, or their fonts changing as the page loads...
 
   ⚠️ Improve image delivery
      Nilai : Est savings of 9 KiB
@@ -75,5 +68,5 @@ Versi LH : 13.5.0
 ════════════════════════════════════════════════════════════════
   RINGKASAN
 ════════════════════════════════════════════════════════════════
-Total audit gagal/perlu perhatian : 12
+Total audit gagal/perlu perhatian : 10
 ════════════════════════════════════════════════════════════════
